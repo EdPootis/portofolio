@@ -4,11 +4,56 @@ import React, { useState } from 'react';
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [statusMessage, setStatusMessage] = useState('');
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText('edmond.chr@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setFormStatus('idle');
+    setStatusMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (!accessKey || accessKey === 'your_web3forms_key_here') {
+      setFormStatus('error');
+      setStatusMessage('Please configure your NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY in the .env.local file.');
+      setIsSubmitting(false);
+      return;
+    }
+
+    formData.append("access_key", accessKey);
+    formData.append("subject", `New Portfolio Message from ${formData.get("name")}`);
+    formData.append("from_name", "Edmond Portfolio");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+      });
+      const data = await response.json();
+      if (data.success) {
+        setFormStatus('success');
+        setStatusMessage('Your message has been sent successfully!');
+        e.currentTarget.reset();
+      } else {
+        setFormStatus('error');
+        setStatusMessage(data.message || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setFormStatus('error');
+      setStatusMessage('Network error. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -268,78 +313,177 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full">
           {/* Project 1 */}
-          <div className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:-translate-y-2 hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <h4 className="text-2xl font-bold text-white mb-3">SiSidang</h4>
-            <p className="text-gray-400 mb-6 text-sm">Thesis & Defense Management System</p>
-            <p className="text-gray-300 mb-6">
-              Maintained and enhanced the backend using Django. Engineered new features and refined database models for complex academic grading workflows, significantly improving system reliability.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Django</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Python</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">PostgreSQL</span>
+          <div className="bg-[#111] border border-gray-800 rounded-2xl hover:border-neon-cyan hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div className="h-48 w-full overflow-hidden relative border-b border-gray-800">
+              <img
+                src="/preview_sisidang.png"
+                alt="SiSidang"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+              />
+            </div>
+            <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+              <div>
+                <h4 className="text-2xl font-bold text-white mb-1">SiSidang</h4>
+                <p className="text-gray-400 mb-6 text-sm">Thesis & Defense Management System</p>
+                <p className="text-gray-300 mb-6">
+                  Maintained and enhanced the backend using Django. Engineered new features and refined database models for complex academic grading workflows, significantly improving system reliability.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Django</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Python</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">PostgreSQL</span>
+              </div>
             </div>
           </div>
 
           {/* Project 2 */}
-          <div className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:-translate-y-2 hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <h4 className="text-2xl font-bold text-white mb-3">Store POS Microservice</h4>
-            <p className="text-gray-400 mb-6 text-sm">Building Material Point of Sales</p>
-            <p className="text-gray-300 mb-6">
-              Developed the Supplier Management microservice using Java Spring Boot. Implemented RESTful APIs and configured system monitoring using Prometheus and Grafana.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Spring Boot</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Java</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Prometheus</span>
+          <div className="bg-[#111] border border-gray-800 rounded-2xl hover:border-neon-cyan hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div className="h-48 w-full overflow-hidden relative border-b border-gray-800">
+              <img
+                src="/preview_store.png"
+                alt="Store POS Microservice"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+              />
+            </div>
+            <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start gap-2 mb-1">
+                  <h4 className="text-2xl font-bold text-white">Store POS Microservice</h4>
+                  <a
+                    href="https://github.com/orgs/AdvProg25-B01/repositories"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
+                    title="GitHub Repository"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                  </a>
+                </div>
+                <p className="text-gray-400 mb-6 text-sm">Building Material Point of Sales</p>
+                <p className="text-gray-300 mb-6">
+                  Developed the Supplier Management microservice using Java Spring Boot. Implemented RESTful APIs and configured system monitoring using Prometheus and Grafana.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Spring Boot</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Java</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Prometheus</span>
+              </div>
             </div>
           </div>
 
           {/* Project 3 */}
-          <div className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:-translate-y-2 hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <h4 className="text-2xl font-bold text-white mb-3">Bali Delights</h4>
-            <p className="text-gray-400 mb-6 text-sm">Fullstack E-Commerce Platform</p>
-            <p className="text-gray-300 mb-6">
-              Co-developed an e-commerce platform dedicated to authentic Balinese souvenirs. Engineered the backend using Django and the mobile client using Flutter, ensuring a seamless user experience across devices.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Django</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Flutter</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">PostgreSQL</span>
+          <div className="bg-[#111] border border-gray-800 rounded-2xl hover:border-neon-cyan hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div className="h-48 w-full overflow-hidden relative border-b border-gray-800">
+              <img
+                src="/preview_bali.png"
+                alt="Bali Delights"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+              />
+            </div>
+            <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start gap-2 mb-1">
+                  <h4 className="text-2xl font-bold text-white">Bali Delights</h4>
+                  <a
+                    href="https://github.com/orgs/PBP-D3/repositories"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
+                    title="GitHub Repository"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                  </a>
+                </div>
+                <p className="text-gray-400 mb-6 text-sm">Fullstack E-Commerce Platform</p>
+                <p className="text-gray-300 mb-6">
+                  Co-developed an e-commerce platform dedicated to authentic Balinese souvenirs. Engineered the backend using Django and the mobile client using Flutter, ensuring a seamless user experience across devices.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Django</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Flutter</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">PostgreSQL</span>
+              </div>
             </div>
           </div>
 
           {/* Project 4 */}
-          <div className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:-translate-y-2 hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <h4 className="text-2xl font-bold text-white mb-3">Personal Portfolio</h4>
-            <p className="text-gray-400 mb-6 text-sm">Responsive Personal Website</p>
-            <p className="text-gray-300 mb-6">
-              Designed and built this responsive portfolio website to showcase my technical skills, experiences, and academic achievements. Powered by Next.js and styled with modern Tailwind CSS animations.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Next.js</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">React</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Tailwind CSS</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">TypeScript</span>
+          <div className="bg-[#111] border border-gray-800 rounded-2xl hover:border-neon-cyan hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden flex flex-col">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div className="h-48 w-full overflow-hidden relative border-b border-gray-800">
+              <img
+                src="/preview_portofolio.png"
+                alt="Personal Portfolio"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+              />
+            </div>
+            <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start gap-2 mb-1">
+                  <h4 className="text-2xl font-bold text-white">Personal Portfolio</h4>
+                  <a
+                    href="https://edpootis.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
+                    title="Live Website"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                  </a>
+                </div>
+                <p className="text-gray-400 mb-6 text-sm">Responsive Personal Website</p>
+                <p className="text-gray-300 mb-6">
+                  Designed and built this responsive portfolio website to showcase my technical skills, experiences, and academic achievements. Powered by Next.js and styled with modern Tailwind CSS animations.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Next.js</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">React</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Tailwind CSS</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">TypeScript</span>
+              </div>
             </div>
           </div>
 
           {/* Project 5 */}
-          <div className="bg-[#111] border border-gray-800 p-8 rounded-2xl hover:-translate-y-2 hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden md:col-span-2">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-            <h4 className="text-2xl font-bold text-white mb-3">Custom Search Engine</h4>
-            <p className="text-gray-400 mb-6 text-sm">Full-text indexing pipeline</p>
-            <p className="text-gray-300 mb-6 md:w-3/4">
-              Engineered a full-text search engine from scratch featuring efficient BSBI and SPIMI indexing pipelines, optimized with bit-level compression and TF-IDF/BM25 scoring. Deployed via a real-time Flask web interface.
-            </p>
-            <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Python</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">Flask</span>
-              <span className="bg-gray-800 px-3 py-1 rounded-full">NLTK</span>
+          <div className="bg-[#111] border border-gray-800 rounded-2xl hover:border-neon-cyan transition-all duration-300 group relative overflow-hidden md:col-span-2 flex flex-col lg:flex-row">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
+            <div className="w-full lg:w-1/2 h-56 lg:h-auto min-h-[220px] overflow-hidden relative border-b lg:border-b-0 lg:border-r border-gray-800">
+              <img
+                src="/preview_search.png"
+                alt="Custom Search Engine"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-85 group-hover:opacity-100"
+              />
+            </div>
+            <div className="w-full lg:w-1/2 p-6 md:p-8 flex flex-col justify-between">
+              <div>
+                <div className="flex justify-between items-start gap-2 mb-1">
+                  <h4 className="text-2xl font-bold text-white">Custom Search Engine</h4>
+                  <a
+                    href="https://github.com/EdPootis/search-engine-from-scratch"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
+                    title="GitHub Repository"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                  </a>
+                </div>
+                <p className="text-gray-400 mb-6 text-sm">Full-text indexing pipeline</p>
+                <p className="text-gray-300 mb-6">
+                  Engineered a full-text search engine from scratch featuring efficient BSBI and SPIMI indexing pipelines, optimized with bit-level compression and TF-IDF/BM25 scoring. Deployed via a real-time Flask web interface.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2 text-xs text-neon-cyan-dark">
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Python</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">Flask</span>
+                <span className="bg-gray-800 px-3 py-1 rounded-full">NLTK</span>
+              </div>
             </div>
           </div>
         </div>
@@ -426,11 +570,13 @@ export default function Home() {
                 <h4 className="text-2xl font-bold text-white">Contact Me!</h4>
               </div>
 
-              <form className="space-y-4">
+              <form onSubmit={handleFormSubmit} className="space-y-4">
                 <div>
                   <label className="text-gray-400 text-sm font-semibold mb-2 block">Name</label>
                   <input
                     type="text"
+                    name="name"
+                    required
                     placeholder="Your Name"
                     className="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors text-sm font-medium"
                   />
@@ -439,6 +585,8 @@ export default function Home() {
                   <label className="text-gray-400 text-sm font-semibold mb-2 block">Email</label>
                   <input
                     type="email"
+                    name="email"
+                    required
                     placeholder="your.email@example.com"
                     className="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-cyan transition-colors text-sm font-medium"
                   />
@@ -446,17 +594,29 @@ export default function Home() {
                 <div>
                   <label className="text-gray-400 text-sm font-semibold mb-2 block">Message</label>
                   <textarea
+                    name="message"
+                    required
                     placeholder="Write your message here..."
                     className="w-full bg-gray-950 border border-gray-800 rounded-xl px-4 py-3 text-white h-32 focus:outline-none focus:border-neon-cyan transition-colors resize-none text-sm font-medium"
                   />
                 </div>
                 <button
                   type="submit"
-                  onClick={(e) => { e.preventDefault(); alert('Message sending simulation: This portfolio is static. Please reach out via social links on the right!'); }}
-                  className="w-full py-3 rounded-xl bg-neon-cyan text-black hover:bg-neon-cyan-dark hover:shadow-neon-glow transition-all duration-300 font-bold mt-4 cursor-pointer text-sm"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-xl bg-neon-cyan text-black hover:bg-neon-cyan-dark hover:shadow-neon-glow transition-all duration-300 font-bold mt-4 cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
+
+                {formStatus !== 'idle' && (
+                  <div className={`p-4 rounded-xl text-sm font-semibold border ${
+                    formStatus === 'success'
+                      ? 'bg-green-500/10 border-green-500/30 text-green-400'
+                      : 'bg-red-500/10 border-red-500/30 text-red-400'
+                  }`}>
+                    {statusMessage}
+                  </div>
+                )}
               </form>
             </div>
           </div>
