@@ -68,12 +68,62 @@ export default function Home() {
         <h2 className="text-2xl md:text-4xl font-semibold text-gray-400 mb-8">
           Software Engineer <br /> <span className="text-gray-500 text-xl md:text-2xl">Focusing on full-stack web and mobile application development</span>
         </h2>
-        <a
-          href="#projects"
-          className="px-8 py-3 rounded-full border border-neon-cyan text-neon-cyan hover:bg-neon-cyan hover:text-black transition-all duration-300 shadow-neon-glow hover:shadow-neon-glow-hover font-semibold"
-        >
-          View My Work
-        </a>
+
+        {/* Social Links Row */}
+        <div className="flex flex-wrap justify-center gap-6 mb-10">
+          {/* Email */}
+          <a
+            href="mailto:edmond.chr@gmail.com"
+            className="w-12 h-12 rounded-full bg-gray-900/60 border border-gray-800 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-neon-glow transition-all duration-300 flex items-center justify-center text-gray-400 cursor-pointer"
+            title="Email"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+          </a>
+
+          {/* GitHub */}
+          <a
+            href="https://github.com/EdPootis"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-gray-900/60 border border-gray-800 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-neon-glow transition-all duration-300 flex items-center justify-center text-gray-400 cursor-pointer"
+            title="GitHub"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /></svg>
+          </a>
+
+          {/* LinkedIn */}
+          <a
+            href="https://linkedin.com/in/edmondchristian"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-gray-900/60 border border-gray-800 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-neon-glow transition-all duration-300 flex items-center justify-center text-gray-400 cursor-pointer"
+            title="LinkedIn"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" /><rect width="4" height="12" x="2" y="9" /><circle cx="4" cy="4" r="2" /></svg>
+          </a>
+
+          {/* Instagram */}
+          <a
+            href="https://instagram.com/_edmondchristian"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-gray-900/60 border border-gray-800 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-neon-glow transition-all duration-300 flex items-center justify-center text-gray-400 cursor-pointer"
+            title="Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5" /><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" /><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" /></svg>
+          </a>
+
+          {/* Resume */}
+          <a
+            href="https://docs.google.com/document/d/1i20hICPO5dg-G7rBCD5WRs4yYzFk-UJvwbbpethGtn8/edit?usp=sharing"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-12 h-12 rounded-full bg-gray-900/60 border border-gray-800 hover:border-neon-cyan hover:text-neon-cyan hover:shadow-neon-glow transition-all duration-300 flex items-center justify-center text-gray-400 cursor-pointer"
+            title="Resume"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /></svg>
+          </a>
+        </div>
       </section>
 
       {/* 2. ABOUT SECTION */}
@@ -359,7 +409,7 @@ export default function Home() {
                     className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
                     title="GitHub Repository"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /></svg>
                   </a>
                 </div>
                 <p className="text-gray-400 mb-6 text-sm">Building Material Point of Sales</p>
@@ -396,7 +446,7 @@ export default function Home() {
                     className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
                     title="GitHub Repository"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /></svg>
                   </a>
                 </div>
                 <p className="text-gray-400 mb-6 text-sm">Fullstack E-Commerce Platform</p>
@@ -433,7 +483,7 @@ export default function Home() {
                     className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
                     title="Live Website"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /></svg>
                   </a>
                 </div>
                 <p className="text-gray-400 mb-6 text-sm">Responsive Personal Website</p>
@@ -471,7 +521,7 @@ export default function Home() {
                     className="text-gray-400 hover:text-neon-cyan transition-colors mt-1 shrink-0 cursor-pointer"
                     title="GitHub Repository"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /></svg>
                   </a>
                 </div>
                 <p className="text-gray-400 mb-6 text-sm">Full-text indexing pipeline</p>
@@ -609,11 +659,10 @@ export default function Home() {
                 </button>
 
                 {formStatus !== 'idle' && (
-                  <div className={`p-4 rounded-xl text-sm font-semibold border ${
-                    formStatus === 'success'
+                  <div className={`p-4 rounded-xl text-sm font-semibold border ${formStatus === 'success'
                       ? 'bg-green-500/10 border-green-500/30 text-green-400'
                       : 'bg-red-500/10 border-red-500/30 text-red-400'
-                  }`}>
+                    }`}>
                     {statusMessage}
                   </div>
                 )}
