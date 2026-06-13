@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0a0a0a;
+  --color-foreground: #f3f4f6;
+  --color-neon-cyan: #00f3ff;
+  --color-neon-cyan-dark: #00b8c2;
+  --shadow-neon-glow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+  --shadow-neon-glow-hover: 0 0 15px rgba(0, 243, 255, 0.7), 0 0 30px rgba(0, 243, 255, 0.5);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Menggunakan CSS murni untuk background agar tidak terjadi error parsing Tailwind */
+body {
+  background-color: #0a0a0a;
+  color: #f3f4f6;
+}
+
+/* Kustomisasi Scrollbar agar bernuansa modern */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00b8c2;
+  /* Warna neon-cyan-dark */
+}
