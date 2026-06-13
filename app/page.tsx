@@ -20,12 +20,13 @@ export default function Home() {
     setFormStatus('idle');
     setStatusMessage('');
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 
-    if (!accessKey || accessKey === 'your_web3forms_key_here') {
+    if (!accessKey) {
       setFormStatus('error');
-      setStatusMessage('Please configure your NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY in the .env.local file.');
+      setStatusMessage('Missing NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY env variable.');
       setIsSubmitting(false);
       return;
     }
@@ -43,7 +44,7 @@ export default function Home() {
       if (data.success) {
         setFormStatus('success');
         setStatusMessage('Your message has been sent successfully!');
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setFormStatus('error');
         setStatusMessage(data.message || 'Something went wrong. Please try again.');
@@ -660,8 +661,8 @@ export default function Home() {
 
                 {formStatus !== 'idle' && (
                   <div className={`p-4 rounded-xl text-sm font-semibold border ${formStatus === 'success'
-                      ? 'bg-green-500/10 border-green-500/30 text-green-400'
-                      : 'bg-red-500/10 border-red-500/30 text-red-400'
+                    ? 'bg-green-500/10 border-green-500/30 text-green-400'
+                    : 'bg-red-500/10 border-red-500/30 text-red-400'
                     }`}>
                     {statusMessage}
                   </div>
